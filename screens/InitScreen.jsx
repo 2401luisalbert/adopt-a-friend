@@ -4,13 +4,13 @@ import { Checkbox, Text } from "react-native-paper";
 import CustomButton from "../components/CustomButton";
 import TermsAndConditionsSheet from "../components/init/TermsAndConditionsSheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from "@react-navigation/core";
 
-const InitScreen = () => {
+const InitScreen = ({setCheckedBtn}) => {
   const [isTermsVisible, setTermsVisible] = useState(false);
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState("");
-  const [showError, setShowError] = useState(false);
+  const navigation = useNavigation()
 
   const handleOpenTerms = () => {
     setTermsVisible(true);
@@ -23,35 +23,28 @@ const InitScreen = () => {
   const description =
     "Adopt-A-Friend es una aplicación diseñada para simplificar el proceso de adopción de mascotas, conectar a los usuarios con mascotas necesitadas de hogar y proporcionar recursos valiosos para el cuidado y bienestar de las mascotas adoptadas.";
 
-  const handleAccept = async () => {
-    if (!checked) {
-      setError("Debes aceptar los términos y condiciones.");
-      setShowError(true);
-      return;
-    }
-
-    try {
-      await AsyncStorage.setItem('acceptedTerms', 'true');
-      // navigation.navigate("DrawerNavigate");
-      setChecked(true);
-    } catch (error) {
-      setError("Ha ocurrido un error al guardar los términos y condiciones. Por favor, inténtalo de nuevo.");
-      setShowError(true);
-    }
-  };
+    const handleAccept = () => {
+      if (!checked) {
+        setError("Debes aceptar los términos y condiciones.");
+        return;
+      }
+  
+      navigation.navigate("DrawerNavigate");
+      setCheckedBtn(true);
+    };
+  
 
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => {
         setError("");
-        setShowError(false);
       }, 3000);
       return () => clearTimeout(timer);
     }
   }, [error]);
 
   return (
-    <GestureHandlerRootView style={styles.container}>
+    <View style={styles.container}>
       <Image
         source={require("../assets/img/presentation.png")}
         resizeMode="contain"
@@ -73,7 +66,7 @@ const InitScreen = () => {
           <Text style={styles.termsText}>Abrir Términos y Condiciones</Text>
         </TouchableOpacity>
       </View>
-      {showError ? <Text style={styles.error}>{error}</Text> : null}
+      {setError ? <Text style={styles.error}>{error}</Text> : null}
 
       <CustomButton
         label="Ingresar"
@@ -85,7 +78,7 @@ const InitScreen = () => {
       {isTermsVisible && (
         <TermsAndConditionsSheet isVisible={isTermsVisible} onClose={handleCloseTerms} />
       )}
-    </GestureHandlerRootView>
+    </View>
   );
 };
 
@@ -127,6 +120,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "red",
     textAlign: "center",
+    marginBottom:10
   },
 });
 

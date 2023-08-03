@@ -52,7 +52,7 @@ const TermsAndConditionsSheet = ({ isVisible, onClose }) => {
           <View style={styles.modalHeader}>
             <Text style={styles.title}>Términos y Condiciones</Text>
           </View>
-          <ScrollView style={styles.scrollView}>
+          <ScrollView>
             <Text style={styles.textContent}>{termsAndConditionsContent}</Text>
           </ScrollView>
           <Button mode="contained" onPress={onClose} style={styles.closeButton}>
@@ -67,7 +67,7 @@ const TermsAndConditionsSheet = ({ isVisible, onClose }) => {
         backgroundColor: "#fff", // Cambia el fondo transparente a blanco
       },
       modalContent: {
-        marginVertical: 50,
+        margin: 50,
         backgroundColor: "#fff",
         padding: 20,
         borderRadius: 8,
@@ -81,13 +81,12 @@ const TermsAndConditionsSheet = ({ isVisible, onClose }) => {
         fontWeight: "bold",
         color: "#1e90ff",
       },
-      scrollView: {
-        marginBottom: 10,
-      },
+
       textContent: {
         fontSize: 16,
         lineHeight: 24,
         textAlign: "justify",
+        marginBottom:-50
       },
       closeButton: {
         marginTop: 20,
