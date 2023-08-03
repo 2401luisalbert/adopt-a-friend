@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useState } from "react";
 import DrawerNavigate from "./DrawerNavigate";
 import InitScreen from "../../screens/InitScreen";
+import RegisterScreen from "../../screens/register/RegisterScreen";
 
 const Stack = createStackNavigator();
 
@@ -32,11 +33,11 @@ const StackNavigate = () => {
       />
 
       {/* Pantalla de registro */}
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Register"
         component={RegisterScreen}
         options={{ title: "Registrarse" }}
-      /> */}
+      />
 
       {/* Pantalla de detalles de mascota */}
       {/* <Stack.Screen
