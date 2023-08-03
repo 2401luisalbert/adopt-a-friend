@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import DrawerNavigate from "./DrawerNavigate";
 import InitScreen from "../../screens/InitScreen";
 import RegisterScreen from "../../screens/register/RegisterScreen";
+import UserScreen from "../../screens/user/UserScreen";
 
 const Stack = createStackNavigator();
 
@@ -46,11 +47,11 @@ const StackNavigate = () => {
         options={{ title: "Información de la mascota" }}
       /> */}
 
-      {/* <Stack.Screen
+      <Stack.Screen
         name="UserScreen"
         component={UserScreen}
         options={{ title: "Perfil" }}
-      /> */}
+      />
     </Stack.Navigator>
   );
 };
