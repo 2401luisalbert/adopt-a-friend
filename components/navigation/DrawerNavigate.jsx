@@ -7,7 +7,7 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import HomeScreen from "../../screens/home/HomeScreen";
-// import LoginScreen from './../../screens/login/LoginScreen';
+import LoginScreen from "../../screens/login/LoginScreen";
 import { Icon } from "@rneui/themed";
 
 const Drawer = createDrawerNavigator();
@@ -35,18 +35,17 @@ const DrawerNavigate = () => {
           ),
         }}
       />
-      {/* {!user && (
-        <Drawer.Screen
-          name="Login"
-          component={LoginScreen}
-          options={{
-            title: "Iniciar sesión",
-            drawerIcon: ({ color, size }) => (
-              <Icon name="user" type="font-awesome" size={40} color={color} />
-            ),
-          }}
-        />
-      )} */}
+
+      <Drawer.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          title: "Iniciar sesión",
+          drawerIcon: ({ color }) => (
+            <Icon name="user" type="font-awesome" size={40} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -57,11 +56,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderBottomColor: "#dcdcdc",
-    borderBottomWidth:1,
-    paddingVertical:20
+    borderBottomWidth: 1,
+    paddingVertical: 20,
   },
   perfil: {
-    marginTop:15,
+    marginTop: 15,
     fontSize: 20,
     fontWeight: "bold",
   },
