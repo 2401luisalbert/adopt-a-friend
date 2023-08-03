@@ -119,6 +119,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signIn = async (user) => {
+    console.log("user", user)
     const { email, password } = user;
     try {
       setLoad(true);

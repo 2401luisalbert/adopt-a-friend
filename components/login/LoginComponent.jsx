@@ -3,13 +3,14 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { TextInput, Text } from "react-native-paper";
 import { Controller } from "react-hook-form";
 import Loader from "../Loader";
-import CustomButton from './../CustomButton';
+import CustomButton from "../CustomButton";
 
 const LoginComponent = ({
   control,
   errors,
   onLogin,
   onRegisterPress,
+  load,
   contextErrors,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -94,14 +95,20 @@ const LoginComponent = ({
         defaultValue=""
       />
 
+      {load ? (
+        <Loader />
+      ) : (
+        <>
           <CustomButton
+            buttonStyles={styles.btn}
             label="Ingresar"
             onPress={onLogin}
           />
           <TouchableOpacity style={styles.touchable} onPress={onRegisterPress}>
             <Text style={styles.touchableText}>Crear una cuenta</Text>
           </TouchableOpacity>
-     
+        </>
+      )}
     </View>
   );
 };

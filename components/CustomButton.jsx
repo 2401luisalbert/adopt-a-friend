@@ -17,7 +17,7 @@ const CustomButton = ({ label, onPress, color = '#1e90ff', disabled = false }) =
 
 const styles = StyleSheet.create({
   button: {
-    width:120,
+    width:"50%",
     marginVertical: 10,
     marginHorizontal: 20,
     borderRadius: 20,

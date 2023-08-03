@@ -5,16 +5,12 @@ import { useForm } from "react-hook-form";
 import LoginComponent from "../../components/login/LoginComponent";
 import { MyToast } from "../../utils/Toast";
 import { useNavigation } from "@react-navigation/native";
-// import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const LoginScreen = () => {
-  // const { signIn, load, contextErrors } = useAuth();
+  const { signIn, load, contextErrors } = useAuth();
   const navigation = useNavigation();
   const { control, handleSubmit, formState: { errors }, reset } = useForm();
-
-  const contextErrors = {"error":null}
-
-
 
   const handleRegisterPress = () => {
     navigation.navigate("Register");
@@ -22,25 +18,24 @@ const LoginScreen = () => {
   };
 
   const onSubmit = async (data) => {
-      console.log("data", data)
-      // try {
-      //   const signInResult = await signIn(data);
-      //   if (!signInResult.success) {
-      //     MyToast({
-      //       typeToast: "error",
-      //       message: signInResult.message,
-      //     });
-      //     return;
-      //   }
-      //   MyToast({
-      //     typeToast: "success",
-      //     message: "Login exitoso",
-      //   });
-      //   navigation.navigate("UserScreen");
-      //   reset();
-      // } catch (error) {
-      //   return;
-      // }
+      try {
+        const signInResult = await signIn(data);
+        if (!signInResult.success) {
+          MyToast({
+            typeToast: "error",
+            message: signInResult.message,
+          });
+          return;
+        }
+        MyToast({
+          typeToast: "success",
+          message: "Login exitoso",
+        });
+        navigation.navigate("UserScreen");
+        reset();
+      } catch (error) {
+        return;
+      }
   };
 
   return (
@@ -57,7 +52,7 @@ const LoginScreen = () => {
           errors={errors}
           onLogin={handleSubmit(onSubmit)}
           onRegisterPress={handleRegisterPress}
-          // load={load}
+          load={load}
           contextErrors={contextErrors}
         />
       </View>

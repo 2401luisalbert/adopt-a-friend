@@ -4,6 +4,7 @@ import { useFonts } from './hooks/useFonts';
 import { AppRegistry } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider } from './context/AuthContext';
+import { CrudPetsProvider } from './context/CrudPetsContext';
 import StackNavigate from './components/navigation/StackNavigate';
 
 AppRegistry.registerComponent('adopt-a-friend', () => App);
@@ -17,11 +18,13 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <PaperProvider>
-        <NavigationContainer>
-          <StackNavigate />
-        </NavigationContainer>
-      </PaperProvider>
+      <CrudPetsProvider>
+        <PaperProvider>
+          <NavigationContainer>
+            <StackNavigate />
+          </NavigationContainer>
+        </PaperProvider>
+      </CrudPetsProvider>
     </AuthProvider>
   );
 }
