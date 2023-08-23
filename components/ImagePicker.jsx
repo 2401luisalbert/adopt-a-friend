@@ -25,7 +25,6 @@ const ImagePickerComponent = ({selectedImages,setSelectedImages}) => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images, // Permite seleccionar solo imágenes
       allowsMultipleSelection: true, // Permite seleccionar múltiples archivos
     });
-    console.log("result", result)
 
     if (!result.canceled && result.assets.length > 0) {
       const selectedAssets = result.assets.slice(0, maxImages);

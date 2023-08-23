@@ -15,7 +15,7 @@ import {
 import { ref, uploadBytes,getDownloadURL } from "firebase/storage";
 import { petValidate } from "../utils/validations";
 import { useAuth } from "./AuthContext";
-import * as ImageResizer from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
 
 import uuid from 'react-native-uuid';
 
@@ -65,24 +65,20 @@ export const CrudPetsProvider = ({ children }) => {
 
   const uploadImage = async (imageFile, folderName) => {
     try {
+
       const imageExtension = imageFile.uri.split(".").pop(); // Extraer la extensión de la URI
       const imageName = uuid.v4() + "." + imageExtension; // Concatenar el punto antes de la extensión
   
       // Redimensionar la imagen antes de subirla
-      const resizedImageUri = await ImageResizer.createResizedImage(
+      const resizedImage = await ImageManipulator.manipulateAsync(
         imageFile.uri,
-        800, // Nuevo ancho de la imagen (puedes ajustar este valor según tus necesidades)
-        600, // Nueva altura de la imagen (puedes ajustar este valor según tus necesidades)
-        'JPEG', // Formato de la imagen resultante
-        80, // Calidad de la imagen resultante (0-100)
-        0, // Rotación de la imagen (0 = sin rotación)
-        null, // Directorio de salida (null para guardar en el mismo directorio)
+        [{ resize: { width: 800, height: 600 } }],
+        { format: ImageManipulator.SaveFormat.JPEG, compress: 0.8 }
       );
-  
+
       const storageRef = ref(storage, `pets/${folderName}/${imageName}`);
-      await uploadBytes(storageRef, resizedImageUri.uri, { contentType: `image/${imageExtension}` }); // Establecer el tipo de contenido correctamente
-  
-      // Obtener la URL de descarga de la imagen
+      await uploadBytes(storageRef, resizedImage.uri, { contentType: `image/jpeg` });
+      
       const downloadURL = await getDownloadURL(storageRef);
       return downloadURL;
     } catch (error) {
@@ -155,6 +151,7 @@ export const CrudPetsProvider = ({ children }) => {
   };
 
   const createPet = async (petData, userId, selectedImages) => {
+    console.log("selectedImages", selectedImages)
     setLoad(true);
     try {
       const resultValidate = petValidate(petData, selectedImages);
@@ -184,7 +181,7 @@ export const CrudPetsProvider = ({ children }) => {
           return imageId;
         })
       );
-
+   
       await updateDoc(newPetDocRef, {
         images: imageIds,
         createdAt: serverTimestamp(),

@@ -25,6 +25,8 @@
     },
     "web": {
       "favicon": "./assets/img/logo-register.png"
-    }
+    },
+    "plugins": ["expo-image-picker"]
+
   }
 }
